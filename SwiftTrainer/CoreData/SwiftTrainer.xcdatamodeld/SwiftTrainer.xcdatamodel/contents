@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="subcategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SubCategory" inverseName="parentCategory" inverseEntity="SubCategory"/>
+    </entity>
+    <entity name="Question" representedClassName="Question" syncable="YES">
+        <attribute name="answer1" optional="YES" attributeType="String"/>
+        <attribute name="answer2" optional="YES" attributeType="String"/>
+        <attribute name="answer3" optional="YES" attributeType="String"/>
+        <attribute name="answer4" optional="YES" attributeType="String"/>
+        <attribute name="correctAnswer" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hint" optional="YES" attributeType="String"/>
+        <attribute name="questionText" optional="YES" attributeType="String"/>
+        <relationship name="parentSubCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubCategory" inverseName="questions" inverseEntity="SubCategory"/>
+    </entity>
+    <entity name="SubCategory" representedClassName="SubCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="subcategories" inverseEntity="Category"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question" inverseName="parentSubCategory" inverseEntity="Question"/>
+    </entity>
+</model>

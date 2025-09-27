@@ -2,7 +2,6 @@
 //  AppDelegate.swift
 //  SwiftTrainer
 //
-//  Created by admin on 10.09.2025.
 //
 
 import UIKit
@@ -14,6 +13,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+       // CoreDataManager.shared.seedDataIfNeeded()
+        
+        let context = CoreDataManager.shared.context
+
+//        if let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+//            let dbURL = url.appendingPathComponent("SwiftTrainer.sqlite")
+//            print("Путь к базе: \(dbURL.path)")
+//        }
+        
+      
+//        if let subCategory = CoreDataManager.shared.fetchSubCategory(name: "Timer & RunLoop", context: context) {
+//            seedQuestions(timerRunLoopQuestions, for: subCategory, context: context)
+//
+//            print("Вопросы добавлены в подкатегорию \(subCategory.name)")
+//        } else {
+//            print("Подкатегория не найдена")
+//        }
+       
+        
         return true
     }
 
