@@ -168,7 +168,6 @@ class QuestionController: UIViewController {
             applyDefaultConfiguration(to: button, title: title, tag: i)
         }
     }
-    
     private func showFinishAlert() {
         let alert = UIAlertController(
             title: "Тест завершён",
@@ -181,10 +180,8 @@ class QuestionController: UIViewController {
         present(alert, animated: true)
     }
 
-
     
     // MARK: - Actions
-    // ХЕЛПЕР: настраивает дефолтный вид кнопки и сбрасывает цвет/включённость
     private func applyDefaultConfiguration(to button: UIButton, title: String, tag: Int) {
         var config = button.configuration ?? UIButton.Configuration.filled()
         config.title = title
@@ -204,7 +201,6 @@ class QuestionController: UIViewController {
         button.tag = tag
         button.isUserInteractionEnabled = true
     }
-
    
     // ПЕРЕПИСАННЫЙ answerTapped - подсветка через configuration
     @objc private func answerTapped(_ sender: UIButton) {
@@ -238,7 +234,7 @@ class QuestionController: UIViewController {
         answerButtons.forEach { $0.isUserInteractionEnabled = false }
 
         // перейти к следующему
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { [weak self] in
             guard let self = self else { return }
             self.currentIndex += 1
             if self.currentIndex < self.questions.count {
@@ -251,7 +247,6 @@ class QuestionController: UIViewController {
             }
         }
     }
-
     
     @objc private func showHint() {
         guard currentIndex < questions.count else { return }

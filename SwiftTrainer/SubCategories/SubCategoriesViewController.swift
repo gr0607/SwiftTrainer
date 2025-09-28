@@ -10,16 +10,16 @@ import CoreData
 class SubCategoriesViewController: UIViewController {
     
     private var subcategories: [SubCategory] = []
-       private var category: Category
+    private var category: Category
        
-       init(category: Category) {
-           self.category = category
-           super.init(nibName: nil, bundle: nil)
-       }
+    init(category: Category) {
+        self.category = category
+        super.init(nibName: nil, bundle: nil)
+    }
        
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

@@ -35,9 +35,9 @@ final class CoreDataManager {
         }
     }
     
-    // MARK: - CRUD
+    // Category
     
-    func createCategory(name: String, colorHex: String? = nil) {
+    func addCategory(name: String) {
         let category = Category(context: context)
         category.name = name
         saveContext()
@@ -53,41 +53,7 @@ final class CoreDataManager {
         }
     }
     
-    func fetchSubcategories(for category: Category) -> [SubCategory] {
-        let request: NSFetchRequest<SubCategory> = SubCategory.fetchRequest()
-        request.predicate = NSPredicate(format: "parentCategory == %@", category)
-        
-        do {
-            return try context.fetch(request)
-        } catch {
-            print("Ошибка fetch SubCategory: \(error)")
-            return []
-        }
-    }
-    
-    func fetchQuestions(for subCategory: SubCategory) -> [Question] {
-        let request: NSFetchRequest<Question> = Question.fetchRequest()
-        request.predicate = NSPredicate(format: "parentSubCategory == %@", subCategory)
-        
-        return (try? context.fetch(request)) ?? []
-    }
-    
-    // MARK: - Seed default data
-       func seedDataIfNeeded() {
-              
-             
-           let concurrencySubTitles = [
-               "GCD (DispatchQueue)",
-               "OperationQueue",
-               "Async/Await",
-               "Actors",
-               "Synchronization",
-               "Deadlocks & Race Conditions",
-               "Timer & RunLoop"
-           ]
-
-           addSubcategories(to: "Concurrency", subTitles: concurrencySubTitles)
-       }
+    // SubCategory
     
     func addSubcategories(to categoryName: String, subTitles: [String]) {
         let request: NSFetchRequest<Category> = Category.fetchRequest()
@@ -113,11 +79,51 @@ final class CoreDataManager {
         }
     }
     
-    func fetchSubCategory(name: String, context: NSManagedObjectContext) -> SubCategory? {
+    func fetchSubcategories(for category: Category) -> [SubCategory] {
         let request: NSFetchRequest<SubCategory> = SubCategory.fetchRequest()
-        request.predicate = NSPredicate(format: "name == %@", name)
-        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "parentCategory == %@", category)
         
-        return try? context.fetch(request).first
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Ошибка fetch SubCategory: \(error)")
+            return []
+        }
     }
+    
+    // Question
+    
+    func fetchQuestions(for subCategory: SubCategory) -> [Question] {
+        let request: NSFetchRequest<Question> = Question.fetchRequest()
+        request.predicate = NSPredicate(format: "parentSubCategory == %@", subCategory)
+        
+        return (try? context.fetch(request)) ?? []
+    }
+       
+    func addQuestion(_ questionsData: questionForBase, for subCategory: SubCategory, context: NSManagedObjectContext) {
+        for item in questionsData {
+            let question = Question(context: context)
+            question.questionText = item.question
+            
+            // гарантируем, что массив answers не пустой и есть 4 варианта
+            if item.answers.count >= 4 {
+                question.answer1 = item.answers[0]
+                question.answer2 = item.answers[1]
+                question.answer3 = item.answers[2]
+                question.answer4 = item.answers[3]
+            }
+            
+            question.correctAnswer = item.correctIndex
+            question.hint = item.hint
+            question.parentSubCategory = subCategory
+        }
+        
+        do {
+            try context.save()
+            print("✅ Questions saved for \(subCategory.name)")
+        } catch {
+            print("❌ Failed to save questions: \(error)")
+        }
+    }
+
 }

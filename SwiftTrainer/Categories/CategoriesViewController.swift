@@ -16,7 +16,6 @@ class CategoriesViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
     private let subHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = "Выберите категорию"
@@ -26,7 +25,6 @@ class CategoriesViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
     private let tableView = UITableView()
     private var categories: [Category] = []
     
@@ -85,7 +83,7 @@ class CategoriesViewController: UIViewController {
                 "Concurrency"
             ]
             for name in initial {
-                CoreDataManager.shared.createCategory(name: name)
+                CoreDataManager.shared.addCategory(name: name)
             }
             categories = CoreDataManager.shared.fetchCategories()
         }

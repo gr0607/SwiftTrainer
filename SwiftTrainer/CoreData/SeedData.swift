@@ -8,31 +8,24 @@ import CoreData
 
 typealias questionForBase = [(question: String, answers: [String], correctIndex: Int16, hint: String)]
 
-func seedQuestions(_ questionsData: questionForBase, for subCategory: SubCategory, context: NSManagedObjectContext) {
-    for item in questionsData {
-        let question = Question(context: context)
-        question.questionText = item.question
-        
-        // гарантируем, что массив answers не пустой и есть 4 варианта
-        if item.answers.count >= 4 {
-            question.answer1 = item.answers[0]
-            question.answer2 = item.answers[1]
-            question.answer3 = item.answers[2]
-            question.answer4 = item.answers[3]
-        }
-        
-        question.correctAnswer = item.correctIndex
-        question.hint = item.hint
-        question.parentSubCategory = subCategory
-    }
-    
-    do {
-        try context.save()
-        print("✅ Questions saved for \(subCategory.name)")
-    } catch {
-        print("❌ Failed to save questions: \(error)")
-    }
-}
+
+let categories: [String] = [
+    "Swift",
+    "UIKit",
+    "SwiftUI",
+    "Store Data",
+    "Networking",
+    "Concurrency"
+]
+
+let subcategories: [String: [String]] = [
+    "Swift": ["Типы данных", "Операторы", "Условные конструкции", "Циклы", "Функции", "Классы и структуры", "Протоколы"],
+    "UIKit": ["UIView", "UIViewController", "UITableView", "UICollectionView", "Авто-Layout", "Gesture Recognizers"],
+    "SwiftUI": ["View", "Modifiers", "State и Binding", "NavigationView", "List и ForEach", "Stacks и Layouts"],
+    "Store Data": ["UserDefaults", "FileManager", "Core Data", "Codable", "Keychain"],
+    "Networking": ["URLSession", "JSON Parsing", "REST API", "WebSockets", "Alamofire"],
+    "Concurrency": ["DispatchQueue", "OperationQueue", "Async/Await", "Task", "Actors"]
+]
 
 // Вопросы Swift 11
 let dataTypeQuestions: questionForBase = [

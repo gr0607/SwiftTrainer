@@ -18,10 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let context = CoreDataManager.shared.context
 
-//        if let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-//            let dbURL = url.appendingPathComponent("SwiftTrainer.sqlite")
-//            print("Путь к базе: \(dbURL.path)")
-//        }
+        if let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            let dbURL = url.appendingPathComponent("SwiftTrainer.sqlite")
+            print("Путь к базе: \(dbURL.path)")
+        }
         
       
 //        if let subCategory = CoreDataManager.shared.fetchSubCategory(name: "Timer & RunLoop", context: context) {
